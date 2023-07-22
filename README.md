@@ -57,6 +57,19 @@ response = llama.run(api_request_json)
 print(seq)
 ```
 
+Other parameters that you can pass in the request json is:
+
+```
+{
+  ...
+  "max_length" = 500,
+  "temperature"= 0.1,
+  "top_p"= 1.0,
+  "frequency_penalty"=1.0
+  ...
+}
+```
+
 Note: Stream is still not working, so it is recommended to submit with `stream: False`.
 
 ## Change Log
