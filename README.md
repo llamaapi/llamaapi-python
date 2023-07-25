@@ -1,4 +1,4 @@
-# LlamaAPI SDK
+# Llama API Client
 
 LlamaAPI is a Python SDK for interacting with the Llama API. It abstracts away the handling of aiohttp sessions and headers, allowing for a simplified interaction with the API.
 
