@@ -1,20 +1,3 @@
-# Llama API Client
-
-LlamaAPI is a Python SDK for interacting with the Llama API. It abstracts away the handling of aiohttp sessions and headers, allowing for a simplified interaction with the API.
-
-## Installation
-
-You can install the LlamaAPI SDK using pip:
-
-```python
-pip install llamaapi
-```
-
-## Usage
-
-After installing the SDK, you can use it in your Python projects like so:
-
-```python
 import json
 from llamaapi import LlamaAPI
 
@@ -54,31 +37,3 @@ api_request_json = {
 # Make your request and handle the response
 response = llama.run(api_request_json)
 print(json.dumps(response.json(), indent=2))
-```
-
-Other parameters that you can pass in the request json is:
-
-```
-{
-  ...
-  "max_length" = 500,
-  "temperature"= 0.1,
-  "top_p"= 1.0,
-  "frequency_penalty"=1.0
-  ...
-}
-```
-
-Note: Stream is still not working, so it is recommended to submit with `stream: False`.
-
-## Change Log
-
-Version 0.1: Initial release
-
-## Contributing
-
-We welcome contributions to this project. Please see the Contributing Guidelines for more details.
-
-## License
-
-llamaapi SDK is licensed under the MIT License. Please see the License File for more details.
