@@ -23,32 +23,37 @@ llama = LlamaAPI("<your_api_token>")
 
 # Define your API request
 api_request_json = {
-    "messages": [
-        {"role": "user", "content": "What is the weather like in Boston?"},
-    ],
-    "functions": [
-        {
-            "name": "get_current_weather",
-            "description": "Get the current weather in a given location",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "location": {
-                        "type": "string",
-                        "description": "The city and state, e.g. San Francisco, CA",
+  "messages": [
+    {"role": "user", "content": "Extract the desired information from the following passage.:\n\nHi!"},
+  ],
+  "functions": [
+        {'name': 'information_extraction',
+         'description': 'Extracts the relevant information from the passage.',
+         'parameters': {
+             'type': 'object',
+             'properties': {
+                 'sentiment': {
+                    'title': 'sentiment',
+                    'type': 'string',
+                    'description': 'the sentiment encountered in the passage'
                     },
-                    "days": {
-                        "type": "number",
-                        "description": "for how many days ahead you wants the forecast",
+                 'aggressiveness': {
+                    'title': 'aggressiveness',
+                    'type': 'integer',
+                    'description': 'a 0-10 score of how aggressive the passage is'
                     },
-                    "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]},
-                },
-            },
-            "required": ["location", "days"],
-        }
+                 'language': {
+                    'title': 'language',
+                    'type': 'string',
+                    'description': 'the language of the passage'
+                    }
+             },
+             'required': ['sentiment', 'aggressiveness', 'language']
+         }
+      }
     ],
-    "stream": False,
-    "function_call": "get_current_weather",
+  "stream": False,
+  "function_call": {"name": "information_extraction"},
 }
 
 # Make your request and handle the response
