@@ -6,8 +6,9 @@ import nest_asyncio
 
 
 class LlamaAPI:
-    def __init__(self, api_token, hostname = 'https://llamaapi.fly.dev'):
+    def __init__(self, api_token, hostname = 'https://llamaapi.fly.dev', domain_path = '/api/chat'):
         self.hostname = hostname
+        self.domain_path = domain_path
         self.api_token = api_token
         self.headers = {'Llama-API-Token': self.api_token}
 
@@ -19,7 +20,7 @@ class LlamaAPI:
 
     async def _run_stream_for_jupyter(self, api_request_json):
         async with aiohttp.ClientSession() as session:
-            async with session.post(f"{self.hostname}/api/chat", headers=self.headers, json=api_request_json) as resp:
+            async with session.post(f"{self.hostname}{self.domain_path}", headers=self.headers, json=api_request_json) as resp:
                 async for chunk in resp.content.iter_any():
                     await self.queue.put(chunk.decode('utf-8'))
 
