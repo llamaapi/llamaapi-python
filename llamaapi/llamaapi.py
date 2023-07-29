@@ -43,12 +43,12 @@ class LlamaAPI:
 
     async def run_stream(self, api_request_json):
         async with aiohttp.ClientSession() as session:
-            async with session.post(f"{self.hostname}/api/chat", headers=self.headers, json=api_request_json) as resp:
+            async with session.post(f"{self.hostname}{self.domain_path}", headers=self.headers, json=api_request_json) as resp:
                 async for chunk in resp.content.iter_any():
                     yield chunk.decode('utf-8')
 
     def run_sync(self, api_request_json):
-        response = requests.post(f"{self.hostname}/api/chat", headers=self.headers, json=api_request_json)
+        response = requests.post(f"{self.hostname}{self.domain_path}", headers=self.headers, json=api_request_json)
         if response.status_code != 200:
             raise Exception(f"POST {response.status_code}")
         return response  # assuming server responds with JSON
