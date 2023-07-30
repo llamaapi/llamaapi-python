@@ -50,7 +50,7 @@ class LlamaAPI:
     def run_sync(self, api_request_json):
         response = requests.post(f"{self.hostname}{self.domain_path}", headers=self.headers, json=api_request_json)
         if response.status_code != 200:
-            raise Exception(f"POST {response.status_code}")
+            raise Exception(f"POST {response.status_code} {response.detail}")
         return response  # assuming server responds with JSON
     
 
