@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "llamaapi"
-version = "0.1.25"
+version = "0.1.29"
 description = "Llama API python SDK"
 authors = ["Eduardo Reis <edu.pontes@gmail.com>"]
 license = "MIT"
