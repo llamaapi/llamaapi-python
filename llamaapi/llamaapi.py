@@ -6,11 +6,11 @@ import nest_asyncio
 
 
 class LlamaAPI:
-    def __init__(self, api_token, hostname = 'https://llamaapi.fly.dev', domain_path = '/api/chat'):
+    def __init__(self, api_token, hostname = 'https://llamaapi.fly.dev', domain_path = '/chat/completions'):
         self.hostname = hostname
         self.domain_path = domain_path
         self.api_token = api_token
-        self.headers = {'Llama-API-Token': self.api_token}
+        self.headers = {"Authorization": f"Bearer {self.api_token}"}
 
         # Apply nest_asyncio to enable nested usage of asyncio's event loop
         nest_asyncio.apply()
