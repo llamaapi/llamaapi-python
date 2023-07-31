@@ -6,7 +6,7 @@ import nest_asyncio
 
 
 class LlamaAPI:
-    def __init__(self, api_token, hostname = 'https://llamaapi.fly.dev', domain_path = '/chat/completions'):
+    def __init__(self, api_token, hostname = 'https://api.llama-api.com', domain_path = '/chat/completions'):
         self.hostname = hostname
         self.domain_path = domain_path
         self.api_token = api_token
