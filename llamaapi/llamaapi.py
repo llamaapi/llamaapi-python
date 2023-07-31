@@ -6,11 +6,11 @@ import nest_asyncio
 
 
 class LlamaAPI:
-    def __init__(self, api_token, hostname = 'https://llamaapi.fly.dev', domain_path = '/api/chat'):
+    def __init__(self, api_token, hostname = 'https://llamaapi.fly.dev', domain_path = '/chat/completions'):
         self.hostname = hostname
         self.domain_path = domain_path
         self.api_token = api_token
-        self.headers = {'Llama-API-Token': self.api_token}
+        self.headers = {'Authorization': f'Bearer {self.api_token}'}
 
         # Apply nest_asyncio to enable nested usage of asyncio's event loop
         nest_asyncio.apply()
@@ -49,8 +49,8 @@ class LlamaAPI:
 
     def run_sync(self, api_request_json):
         response = requests.post(f"{self.hostname}{self.domain_path}", headers=self.headers, json=api_request_json)
-        if response.status_code != 200:
-            raise Exception(f"POST {response.status_code} {response.detail}")
+        if response.status_code != 200:        
+            raise Exception(f"POST {response.status_code} {response.json()['detail']}")
         return response  # assuming server responds with JSON
     
 
