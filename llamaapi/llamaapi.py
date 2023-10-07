@@ -36,6 +36,22 @@ class LlamaAPI:
             print(sequence)
             # return sequence
 
+    def _streaming_generator(self, api_request_json):
+        loop = asyncio.get_event_loop()
+        
+        async def async_generator():
+            async for chunk in self.run_stream(api_request_json):
+                yield chunk
+
+        gen = async_generator()
+        while True:
+            try:
+                # Run the async generator in the event loop until the next yield
+                yield loop.run_until_complete(gen.__anext__())
+            except StopAsyncIteration:
+                # The async generator is done
+                return
+
     def run_stream_jupyter(self, api_request_json):
         loop = asyncio.get_event_loop()
         loop.run_until_complete(self._run_stream_for_jupyter(api_request_json))
@@ -62,6 +78,6 @@ class LlamaAPI:
 
     def run(self, api_request_json):
         if api_request_json.get('stream', False):
-            return self.run_stream(api_request_json)
+            return self._streaming_generator(api_request_json)
         else:
             return self.run_sync(api_request_json)
