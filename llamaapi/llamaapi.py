@@ -2,8 +2,7 @@ import aiohttp
 import asyncio
 import requests
 import nest_asyncio
-
-
+import logging
 
 class LlamaAPI:
     def __init__(self, api_token, hostname = 'https://api.llama-api.com', domain_path = '/chat/completions'):
@@ -12,10 +11,8 @@ class LlamaAPI:
         self.api_token = api_token
         self.headers = {'Authorization': f'Bearer {self.api_token}'}
 
-        # Apply nest_asyncio to enable nested usage of asyncio's event loop
         nest_asyncio.apply()
 
-        # Add an asyncio queue
         self.queue = asyncio.Queue()
 
     async def _run_stream_for_jupyter(self, api_request_json):
@@ -28,13 +25,7 @@ class LlamaAPI:
         while True:
             sequence = await self.queue.get()
 
-            # if sequence == '<<EOS>>':
-            #     # End of stream
-            #     break
-            # Do something with the sequence
-            # You can add a check here to break the loop when a certain condition is met
-            print(sequence)
-            # return sequence
+            logging.info(sequence)
 
     def run_stream_jupyter(self, api_request_json):
         loop = asyncio.get_event_loop()
@@ -51,7 +42,7 @@ class LlamaAPI:
         response = requests.post(f"{self.hostname}{self.domain_path}", headers=self.headers, json=api_request_json)
         if response.status_code != 200:        
             raise Exception(f"POST {response.status_code} {response.json()['detail']}")
-        return response  # assuming server responds with JSON
+        return response
     
 
     def run_jupyter(self, api_request_json):
